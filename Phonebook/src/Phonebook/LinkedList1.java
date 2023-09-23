@@ -1,8 +1,25 @@
 package Phonebook;
 
+class Node1 <T> { //new
+
+    public T data;
+    public Node1 <T> next;
+
+    public Node1 () {
+        data = null;
+        next = null;
+    }
+
+    public Node1(T Data) {
+        data = Data;
+        next = null;
+    }
+ 
+}
+
 public class LinkedList1 <T> {
-	   private Node<T> head ;
-	   private Node<T> current;
+	   private Node1<T> head ;
+	   private Node1<T> current;
 
 	    public LinkedList1() {
 	        head = current =null;
@@ -38,7 +55,7 @@ public class LinkedList1 <T> {
 	    }
 	    
 	    public void insert(T d){
-	        Node <T> p = new Node <T>(d);
+	        Node1 <T> p = new Node1 <T>(d);
 	        if ( head == null){
 	            head =p;
 	            current = p;
@@ -58,7 +75,7 @@ public class LinkedList1 <T> {
 	        }
 	        
 	        else{
-	            Node<T> p = head;
+	            Node1<T> p = head;
 	            while(p.next != current)
 	                p=p.next;
 	                p.next=current.next;

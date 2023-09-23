@@ -1,6 +1,6 @@
 package Phonebook;
 
-public class LinkedList {
+
 	class Node<T> {
 		public T data;
 		public Node<T> next;
@@ -138,4 +138,4 @@ public class LinkedList {
 
 		// for the sorting method we can use ascii of the letters?...
 	}
-}
+

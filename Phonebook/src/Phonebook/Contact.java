@@ -1,6 +1,6 @@
 package Phonebook;
 
-public class Contact extends PhoneBook {
+public class Contact implements Comparable extends PhoneBook {
 	  private String Name,PhoneNumber,Email,Address,Birthday,Notes;
 	  private Event Event;
 
@@ -16,7 +16,7 @@ public class Contact extends PhoneBook {
 	    }
 
 	    public Contact(Contact obj){
-	         Name = obj.Name;
+	         Name = obj.Name; 
 	         PhoneNumber=obj.PhoneNumber;
 	         Email= obj.Email;
 	         Address = obj.Address;
@@ -28,58 +28,12 @@ public class Contact extends PhoneBook {
 	}
 	    
 	    
-	        public void SearchByEmail(String email){
-	        Contact ContactArray[] = new Contact[13]; // ContactLinkedList.length()
-	        int size=0;
-	        ContactLinkedList.FindFirst();
-	        while(!ContactLinkedList.last()){
-	            if (ContactLinkedList.retrieve().Email.equalsIgnoreCase(email))
-	               ContactArray[size++] = ContactLinkedList.retrieve();
-	            ContactLinkedList.FindNext();
-	        }   if (ContactLinkedList.retrieve().Email.equalsIgnoreCase(email))
-	               ContactArray[size++] = ContactLinkedList.retrieve();
+
 	        
-	        for ( int i =0; i < size; i++)
-	            ContactArray[i].toString();
-	        
-	    }
-	        
-	        
-	    public void SearchByAddress(String address){
-	        Contact ContactArray[] = new Contact[13];
-	        int size=0;
-	        ContactLinkedList.FindFirst();
-	        while(!ContactLinkedList.last()){
-	            if (ContactLinkedList.retrieve().Address.equalsIgnoreCase(address))
-	               ContactArray[size++] = ContactLinkedList.retrieve();
-	            ContactLinkedList.FindNext();
-	        }   if (ContactLinkedList.retrieve().Address.equalsIgnoreCase(address))
-	               ContactArray[size++] = ContactLinkedList.retrieve();
-	        
-	        for ( int i =0; i < size; i++)
-	            ContactArray[i].toString();
-	        
-	    }
+	       
 	    
 	    
-	        public void SearchByBirthday(String birthday){
-	        Contact ContactArray[] = new Contact[13];
-	        int size=0;
-	        ContactLinkedList.FindFirst();
-	        String Day = birthday.substring(0, 2);
-	        String month = birthday.substring(3, 5);
-	        String year = birthday.substring(6, 10);
-	        while(!ContactLinkedList.last()){
-	            if (ContactLinkedList.retrieve().Birthday.substring(0, 2).equals(Day)&&ContactLinkedList.retrieve().Birthday.substring(3, 5).equals(month)&&ContactLinkedList.retrieve().Birthday.substring(6, 10).equals(year))
-	               ContactArray[size++] = ContactLinkedList.retrieve();
-	            ContactLinkedList.FindNext();
-	        }   if (ContactLinkedList.retrieve().Birthday.substring(0, 2).equals(Day)&&ContactLinkedList.retrieve().Birthday.substring(3, 5).equals(month)&&ContactLinkedList.retrieve().Birthday.substring(6, 10).equals(year))
-	               ContactArray[size++] = ContactLinkedList.retrieve();
-	        
-	        for ( int i =0; i < size; i++)
-	            ContactArray[i].toString();
-	        
-	    }
+
 	                
 	                
 	            @Override

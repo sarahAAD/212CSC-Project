@@ -107,17 +107,17 @@ public class PhoneBook {
                     break;
 
                     case "5": //print event detail
-                    System.out.print("Enter search criteria:\n1.contact name\n2.event title:");
-                    int eventInput = scan.nextInt();
+                    System.out.print("Enter search criteria:\n1.contact name\n2.event title\n");
+                    String eventInput = scan.nextLine();
 
                     switch(eventInput){
-                        case 1:
+                        case "1":
                         System.out.print("Enter contact name:");
                         String eventContactName = scan.nextLine();
                         // eventList.SearchByContactName(eventContactName); //what am i supposed to do??
                         break;
 
-                        case 2:
+                        case "2":
                         System.out.print("Enter event title:");
                         String eventTitlePrint = scan.nextLine();
                         //search

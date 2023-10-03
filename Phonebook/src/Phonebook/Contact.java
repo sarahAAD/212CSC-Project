@@ -1,106 +1,109 @@
 package Phonebook;
 
-public class Contact implements Comparable extends PhoneBook {
-	  private String Name,PhoneNumber,Email,Address,Birthday,Notes;
-	  private Event Event;
-
-
-	    public Contact(String name, String phoneNumber, String email, String address, String birthday, String notes,Event event) {
-	        Name = name;
-	        PhoneNumber = phoneNumber;
-	        Email = email;
-	        Address = address;
-	        Birthday = birthday;
-	        Notes = notes;
-	        Event.addEvent(event);
-	    }
-
-	    public Contact(Contact obj){
-	         Name = obj.Name; 
-	         PhoneNumber=obj.PhoneNumber;
-	         Email= obj.Email;
-	         Address = obj.Address;
-	         Birthday = obj.Birthday;
-	         Notes=obj.Notes;
-	         Event.addEvent(obj.Event);
-	 
-	 
+public class Contact implements Comparable<Contact> {
+	private String Name, PhoneNumber, Email, Address, Birthday, Notes;
+	private LinkedList <Event> eventList = new LinkedList<>();
+    private Event event;
+	
+	
+	public Contact() {
 	}
-	    
-	    
 
-	        
-	       
-	    
-	    
+	public Contact(String name, String phoneNumber, String email, String address, String birthday, String notes) {
+		Name = name;
+		PhoneNumber = phoneNumber;
+		Email = email;
+		Address = address;
+		Birthday = birthday;
+		Notes = notes;
+	}
 
-	                
-	                
-	            @Override
-	    public String toString() {
-	        return "Contact{" + "name=" + Name + "/n PhoneNumber=" + PhoneNumber + "/n Email=" + Email + "/n Address=" + Address + "/n Birthday=" + Birthday + "/n notes=" + Notes + "/n event=" + Event + '}';
-	    }
+	public Contact(Contact obj) {
+		Name = obj.Name;
+		PhoneNumber = obj.PhoneNumber;
+		Email = obj.Email;
+		Address = obj.Address;
+		Birthday = obj.Birthday;
+		Notes = obj.Notes;
+		eventList.add(obj.event);
 
-	    public String getName() {
-	        return Name;
-	    }
+	}
 
-	    public void setName(String name) {
-	        this.Name = name;
-	    }
+	@Override
+	public int compareTo(Contact contact) {
+		return Name.compareTo(contact.Name);
+	}
 
-	    public String getPhoneNumber() {
-	        return PhoneNumber;
-	    }
+	@Override
+	public String toString() {
+		return "Contact{" + "name=" + Name + "/n PhoneNumber=" + PhoneNumber + "/n Email=" + Email + "/n Address="
+				+ Address + "/n Birthday=" + Birthday + "/n notes=" + Notes + "/n event=" + event + '}';
+	}
 
-	    public void setPhoneNumber(String PhoneNumber) {
-	        this.PhoneNumber = PhoneNumber;
-	    }
+	public String getName() {
+		return Name;
+	}
 
-	    public String getEmail() {
-	        return Email;
-	    }
+	public void setName(String name) {
+		this.Name = name;
+	}
 
-	    public void setEmail(String Email) {
-	        this.Email = Email;
-	    }
+	public String getPhoneNumber() {
+		return PhoneNumber;
+	}
 
-	    public String getAddress() {
-	        return Address;
-	    }
+	public void setPhoneNumber(String PhoneNumber) {
+		this.PhoneNumber = PhoneNumber;
+	}
 
-	    public void setAddress(String Address) {
-	        this.Address = Address;
-	    }
+	public String getEmail() {
+		return Email;
+	}
 
-	    public String getBirthday() {
-	        return Birthday;
-	    }
+	public void setEmail(String Email) {
+		this.Email = Email;
+	}
 
-	    public void setBirthday(String Birthday) {
-	        this.Birthday = Birthday;
-	    }
+	public String getAddress() {
+		return Address;
+	}
 
-	    public String getNotes() {
-	        return Notes;
-	    }
+	public void setAddress(String Address) {
+		this.Address = Address;
+	}
 
-	    public void setNotes(String notes) {
-	        this.Notes = notes;
-	    }
+	public String getBirthday() {
+		return Birthday;
+	}
 
-	    public Event getEvent() {
-	        return Event;
-	    }
+	public void setBirthday(String Birthday) {
+		this.Birthday = Birthday;
+	}
 
-	    public void setEvent(Event event) {
-	        this.Event = event;
-	    }
+	public String getNotes() {
+		return Notes;
+	}
+
+	public void setNotes(String notes) {
+		this.Notes = notes;
+	}
+
+	public LinkedList<Event> getEventList() {
+		return eventList;
+	}
+
+	public void setEventList(LinkedList<Event> eventList) {
+		this.eventList = eventList;
+	}
+
+	public Event getEvent() {
+		return event;
+	}
+
+	public void setEvent(Event event) {
+		this.event = event;
+	}
 
 
-	    }
 
-	   
-	  
-
-
+}

@@ -8,7 +8,7 @@ public class PhoneBook {
 
 	public static void main(String[] args) {
 		String choice = "0";
-		while (choice != "8") { // loop is not working :-D wouldnt stop at 8 :-D
+		while (choice != "8") { 
 			System.out.println("Welcome to the Linked Tree Phonebook!\r\n" + "Please choose an option:\r\n"
 					+ "1. Add a contact\r\n" + "2. Search for a contact\r\n" + "3. Delete a contact\r\n"
 					+ "4. Schedule an event\r\n" + "5. Print event details\r\n" + "6. Print contacts by first name\r\n"
@@ -21,7 +21,6 @@ public class PhoneBook {
 
 			switch (choice) {
 			case "1":
-				// create new object contact and link each attribute scanned ie obj.name =name;
 				Contact c1 = new Contact();
 				System.out.print("Enter the contact's name:");
 				String name = scan.nextLine();
@@ -45,54 +44,68 @@ public class PhoneBook {
 				PhoneBook.AddContact(c1);
 				break;
 
-			case "2":
+			case "2": //search for a contact
 				System.out.println(
 						"Enter search criteria:\n1.Name\n2.Phone Number\n3.Email Address\n4.Address\n5.Birthday");
-				String input = scan.nextLine();
+				String searchInput = scan.nextLine();
 
-				switch (input) { // nested switch
+				switch (searchInput) { // nested switch
 				case "1":
 					System.out.print("Enter the contact's name:");
 					String contactName = scan.nextLine();
-					PhoneBook.PrintSameFirstName(contactName);
-					/*
-					 * search by name method will be used here if(contactLinkedList.searchbyname)
-					 * ??????????? idk
-					 */
+					PhoneBook.SearchByName(contactName);
 					break;
 
 				case "2":
 					System.out.print("Enter the contact's phone number:");
 					String contactPhoneNumber = scan.nextLine();
-
-					// search
+					PhoneBook.SearchByPhoneNumber(contactPhoneNumber);
 					break;
 
 				case "3":
 					System.out.print("Enter the contact's email address:");
 					String contactEmailAddress = scan.nextLine();
 					PhoneBook.SearchByEmail(contactEmailAddress);
-					// search
 					break;
 
 				case "4":
 					System.out.print("Enter the contact's address:");
 					String contactAddress = scan.nextLine();
 					PhoneBook.SearchByAddress(contactAddress);
-					// search
 					break;
 
 				case "5":
 					System.out.print("Enter the contact's birthday:");
 					String contactBirthday = scan.nextLine();
 					PhoneBook.SearchByBirthday(contactBirthday);
-					// search
 					break;
 				}
 
 				break;
 
 			case "3": // delete contact
+				System.out.println("Enter search criteria:\n1.Name\n2.Phone Number\n3.Email Address");
+				String deleteInput = scan.nextLine();
+				
+				switch (deleteInput) { //nested switch
+				case "1":
+					System.out.print("Enter contact name:");
+					String deleteName = scan.nextLine();	
+					PhoneBook.DeleteContactByName(deleteName);
+					break;
+					
+				case"2":
+					System.out.print("Enter contact phone number:");
+					String deletePhoneNumber = scan.nextLine();	
+					PhoneBook.DeleteContactByPhoneNumber(deletePhoneNumber);
+					break;
+					
+				case "3":
+					System.out.print("Enter contact email address:");
+					String deleteEmail = scan.nextLine();	
+					PhoneBook.DeleteContactByEmail(deleteEmail);
+					break;	
+				}
 				break;
 
 			case "4": // schedule an event
@@ -104,24 +117,23 @@ public class PhoneBook {
 				String eventTimeAndDate = scan.nextLine();
 				System.out.print("Enter event location:");
 				String eventLocation = scan.nextLine();
+				
+				Contact c = PhoneBook.SearchByName(contactName).retrieve();
 
-				// maybe i should search for contact by name here first then add it in the
-				// method,
-
-				// Event e = new Event(eventTitle, eventTimeAndDate, eventLocation, c1); //how
-				// should i enter contact name?
-
+				Event e = new Event(eventTitle, eventTimeAndDate, eventLocation, c); 
+				//eventList.enqueue(e);
 				break;
 
 			case "5": // print event detail
 				System.out.print("Enter search criteria:\n1.contact name\n2.event title\n");
 				String eventInput = scan.nextLine();
 
-				switch (eventInput) {
+				switch (eventInput) { //nested switch
 				case "1":
 					System.out.print("Enter contact name:");
 					String eventContactName = scan.nextLine();
-					// eventList.SearchByContactName(eventContactName); //what am i supposed to do??
+					//PhoneBook.SearchByContactName(eventContactName);
+					//eventList.SearchByContactName(eventContactName); //what am i supposed to do??
 					break;
 
 				case "2":
@@ -137,7 +149,7 @@ public class PhoneBook {
 
 				System.out.print("Enter the first name:");
 				String firstName = scan.nextLine();
-				// what method to use?
+				PhoneBook.PrintSameFirstName(firstName);
 				break;
 
 			case "7": // print all events alphabetically
@@ -179,6 +191,36 @@ public class PhoneBook {
 			ContactLinkedList.FindNext();
 		}
 		if (ContactLinkedList.retrieve().getAddress().equalsIgnoreCase(address))
+			Contacts.add(ContactLinkedList.retrieve());
+
+		return Contacts;
+
+	}
+	
+	public LinkedList<Contact> SearchByName(String name) {
+		LinkedList<Contact> Contacts = new LinkedList<>();
+		ContactLinkedList.FindFirst();
+		while (!ContactLinkedList.last()) {
+			if (ContactLinkedList.retrieve().getName().equalsIgnoreCase(name))
+				Contacts.add(ContactLinkedList.retrieve());
+			ContactLinkedList.FindNext();
+		}
+		if (ContactLinkedList.retrieve().getName().equalsIgnoreCase(name))
+			Contacts.add(ContactLinkedList.retrieve());
+
+		return Contacts;
+
+	}
+	
+	public LinkedList<Contact> SearchByPhoneNumber(String PhoneNumber) {
+		LinkedList<Contact> Contacts = new LinkedList<>();
+		ContactLinkedList.FindFirst();
+		while (!ContactLinkedList.last()) {
+			if (ContactLinkedList.retrieve().getPhoneNumber().equalsIgnoreCase(PhoneNumber))
+				Contacts.add(ContactLinkedList.retrieve());
+			ContactLinkedList.FindNext();
+		}
+		if (ContactLinkedList.retrieve().getPhoneNumber().equalsIgnoreCase(PhoneNumber))
 			Contacts.add(ContactLinkedList.retrieve());
 
 		return Contacts;
@@ -250,7 +292,7 @@ public class PhoneBook {
 
 	}
 
-	public boolean DeletContact(String name) {
+	public boolean DeleteContactByName(String name) {
 		if (ContactLinkedList.empty())
 			return false;
 		else
@@ -263,6 +305,46 @@ public class PhoneBook {
 				ContactLinkedList.FindNext();
 		}
 		if (ContactLinkedList.retrieve().getName().equals(name)) {
+			ContactLinkedList.delete();
+			return true;
+		}
+
+		return false;
+	}
+	
+	public boolean DeleteContactByPhoneNumber(String phoneNumber) {
+		if (ContactLinkedList.empty())
+			return false;
+		else
+			ContactLinkedList.FindFirst();
+		while (!ContactLinkedList.last()) {
+			if (ContactLinkedList.retrieve().getPhoneNumber().equals(phoneNumber)) {
+				ContactLinkedList.delete();
+				return true;
+			} else
+				ContactLinkedList.FindNext();
+		}
+		if (ContactLinkedList.retrieve().getPhoneNumber().equals(phoneNumber)) {
+			ContactLinkedList.delete();
+			return true;
+		}
+
+		return false;
+	}
+	
+	public boolean DeleteContactByEmail(String Email) {
+		if (ContactLinkedList.empty())
+			return false;
+		else
+			ContactLinkedList.FindFirst();
+		while (!ContactLinkedList.last()) {
+			if (ContactLinkedList.retrieve().getEmail().equals(Email)) {
+				ContactLinkedList.delete();
+				return true;
+			} else
+				ContactLinkedList.FindNext();
+		}
+		if (ContactLinkedList.retrieve().getEmail().equals(Email)) {
 			ContactLinkedList.delete();
 			return true;
 		}

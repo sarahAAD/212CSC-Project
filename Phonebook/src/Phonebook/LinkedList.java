@@ -51,17 +51,27 @@ public class LinkedList<T> {
 		current.data = val;
 	}
 
-	public void add(T val) {
-		Node<T> tmp;
+	/* public void add(T val) {
+		Node<T> tmp=new Node<T>(val);
 		if (empty()) {
-			current = head = new Node<T>(val);
+			current = head = tmp;
 		} else {
-			tmp = current.next;
-			current.next = new Node<T>(val);
-			current = current.next;
-			current.next = tmp;
+			if(((Contact)val).compareTo((Contact)head.data)<0) {
+				tmp.next=head;
+				head=tmp;
+			}
+			else {
+			Node<T> s=head
+			Node<T>	q=null;
+			while(s!null&&(((Contact)s.data).compareTo((Contact)val)<=0)) {
+				q=s;
+				s=s.next;
+			}
+			q.next=tmp;
+			tmp.next=s;
+			}
 		}
-	}
+	} */
 
 	public void delete() {
 		if (current == head) {

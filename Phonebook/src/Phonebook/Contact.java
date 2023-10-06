@@ -1,21 +1,22 @@
 package Phonebook;
 
-public class Contact implements Comparable<Contact> {
+public class Contact extends Event implements Comparable<Contact>{
 	private String Name, PhoneNumber, Email, Address, Birthday, Notes;
-	private LinkedList <Event> eventList = new LinkedList<>();
+//	private LinkedList <Event> eventList = new LinkedList<>();
     private Event event;
 	
 	
 	public Contact() {
 	}
 
-	public Contact(String name, String phoneNumber, String email, String address, String birthday, String notes) {
+	public Contact(String name, String phoneNumber, String email, String address, String birthday, String notes,Event Event) {
 		Name = name;
 		PhoneNumber = phoneNumber;
 		Email = email;
 		Address = address;
 		Birthday = birthday;
 		Notes = notes;
+		event = Event;
 	}
 
 	public Contact(Contact obj) {
@@ -25,19 +26,21 @@ public class Contact implements Comparable<Contact> {
 		Address = obj.Address;
 		Birthday = obj.Birthday;
 		Notes = obj.Notes;
-		eventList.add(obj.event);
+		event = obj.event;
+		//eventList.add(obj.event);
 
 	}
 
 	@Override
 	public int compareTo(Contact contact) {
+
 		return Name.compareTo(contact.Name);
 	}
 
 	@Override
 	public String toString() {
-		return "Contact{" + "name=" + Name + "/n PhoneNumber=" + PhoneNumber + "/n Email=" + Email + "/n Address="
-				+ Address + "/n Birthday=" + Birthday + "/n notes=" + Notes + "/n event=" + event + '}';
+		return "Name:" + Name + "\nPhoneNumber:" + PhoneNumber + "\nEmail:" + Email + "\nAddress:"
+				+ Address + "\nBirthday:" + Birthday + "\nnotes:" + Notes ;
 	}
 
 	public String getName() {
@@ -88,13 +91,14 @@ public class Contact implements Comparable<Contact> {
 		this.Notes = notes;
 	}
 
-	public LinkedList<Event> getEventList() {
-		return eventList;
+
+	public LinkedListQueue getEventList() {
+		return event.getEventList();
 	}
 
-	public void setEventList(LinkedList<Event> eventList) {
-		this.eventList = eventList;
-	}
+	//public void setEventList(LinkedList<Event> eventList) {
+		//this.eventList = eventList;
+	//}
 
 	public Event getEvent() {
 		return event;

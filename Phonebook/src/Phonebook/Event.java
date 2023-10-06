@@ -6,36 +6,48 @@ public class Event extends PhoneBook {
 	private String location;
 	private Contact contact;
 	private LinkedListQueue eventList;
+	LinkedList<Contact> ContactList = new LinkedList<>();
 
-	public Event(String eventTitle, String DateAndTime, String location, Contact contact) {
+	public Event() {
+	}
+
+	public Event(String eventTitle, String DateAndTime, String location, Contact c) {
 		this.eventTitle = eventTitle;
 		this.DateAndTime = DateAndTime;
 		this.location = location;
+		contact = new Contact(c);
 		eventList = new LinkedListQueue();
 
 	}
 
 	public void addEvent(Event event) {
-		ContactLinkedList.FindFirst();
-		while (!ContactLinkedList.last()) {
-			if (ContactLinkedList.retrieve().getName().equalsIgnoreCase(event.contact.getName())
-					&& ContactLinkedList.retrieve().getEvent().DateAndTime.equals(event.DateAndTime))
-				eventList.enqueue(event);
-			else {
-				ContactLinkedList.FindNext();
+		if (!ContactLinkedList.empty()) {
+			ContactLinkedList.FindFirst();
+			while (!ContactLinkedList.last()) {
+				if (ContactLinkedList.retrieve().getEvent() == null) {
+					eventList.enqueue(event);
+				} 
+				else if (ContactLinkedList.retrieve().getName().equalsIgnoreCase(event.contact.getName())&& (!ContactLinkedList.retrieve().getEvent().DateAndTime.equals(event.DateAndTime)))
+					eventList.enqueue(event);
+				else
+					ContactLinkedList.FindNext();
 			}
+
+			if (ContactLinkedList.retrieve().getEvent() == null) {
+				eventList.enqueue(event);
+			} 
+			else if (ContactLinkedList.retrieve().getName().equalsIgnoreCase(event.contact.getName())&& (!ContactLinkedList.retrieve().getEvent().DateAndTime.equals(event.DateAndTime)))
+				eventList.enqueue(event);			
+
 		}
-		if (ContactLinkedList.retrieve().getName().equalsIgnoreCase(event.contact.getName())
-				&& ContactLinkedList.retrieve().getEvent().DateAndTime.equals(event.DateAndTime))
-			eventList.enqueue(event);
-		else {
-			System.out.println("This contact doesn't exist, can't add the event");
-		}
+
+	else System.out.println("This contact doesn't exist, can't add the event");
+
 	}
 
 	public Event SearchByTitle(String Title) {
 		int size = eventList.length();
-		for (int i = 0; i < size; i++) {
+		for (int i = 1; i <= size; i++) {
 			Event temp = eventList.serve();
 			if (temp.eventTitle.equalsIgnoreCase(Title)) {
 				eventList.enqueue(temp);
@@ -48,7 +60,7 @@ public class Event extends PhoneBook {
 
 	public Event SearchByContactName(String Name) {
 		int size = eventList.length();
-		for (int i = 0; i < size; i++) {
+		for (int i = 1; i <= size; i++) {
 			Event temp = eventList.serve();
 			if (temp.contact.getName().equalsIgnoreCase(Name)) {
 				eventList.enqueue(temp);
@@ -57,6 +69,18 @@ public class Event extends PhoneBook {
 		}
 		System.out.println("This event doesn't exist");
 		return null;
+	}
+
+	public void alphabrticOrder(String name) {
+		LinkedListQueue events = new LinkedListQueue();
+		Event tmp = eventList.serve();
+		events.enqueue(tmp);
+		for (int i = 0; i < eventList.length(); i++) {
+			if (tmp.eventTitle.charAt(0) >= eventList.serve().eventTitle.charAt(0)) {
+
+			}
+		}
+
 	}
 
 	public String getEventTitle() {
@@ -98,7 +122,10 @@ public class Event extends PhoneBook {
 	public void setEventList(LinkedListQueue eventList) {
 		this.eventList = eventList;
 	}
-	
-	
+
+	public String toString() {
+		return "eventTitle:" + eventTitle + "\nDateAndTime:" + DateAndTime + "\nlocation:" + location + "\ncontact:"
+				+ contact + "\neventList:" + eventList + "\nContactList:" + ContactList;
+	}
 
 }

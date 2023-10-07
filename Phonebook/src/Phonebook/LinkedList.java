@@ -23,9 +23,8 @@ public class LinkedList<T> {
 	}
 
     public boolean last(){
-        if ( current==head)
-            return true;
-        return current.next==null;
+                return current.next == null;
+
     }
 
 	public boolean full() {
@@ -42,8 +41,6 @@ public class LinkedList<T> {
 
 
     public T retrieve(){
-        if(head==null)
-            return null;
         return current.data;
     }
 

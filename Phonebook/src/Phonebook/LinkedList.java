@@ -22,10 +22,9 @@ public class LinkedList<T> {
 		return head == null;
 	}
 
-    public boolean last(){
-                return current.next == null;
-
-    }
+	public boolean last() {
+		return current.next == null;
+	}
 
 	public boolean full() {
 		return false;
@@ -39,36 +38,58 @@ public class LinkedList<T> {
 		current = current.next;
 	}
 
-
-    public T retrieve(){
-        return current.data;
-    }
+	public T retrieve() {
+		return current.data;
+	}
 
 	public void update(T val) {
 		current.data = val;
 	}
 
-	/* public void add(T val) {
-		Node<T> tmp=new Node<T>(val);
+	public void add(T val) {
+		Node<T> tmp = new Node<T>(val);
 		if (empty()) {
 			current = head = tmp;
+			return;
 		} else {
-			if(((Contact)val).compareTo((Contact)head.data)<0) {
-				tmp.next=head;
-				head=tmp;
-			}
-			else {
-			Node<T> s=head
-			Node<T>	q=null;
-			while(s!null&&(((Contact)s.data).compareTo((Contact)val)<=0)) {
-				q=s;
-				s=s.next;
-			}
-			q.next=tmp;
-			tmp.next=s;
+			if (((Contact) val).compareTo((Contact) head.data) < 0) {
+				tmp.next = head;
+				head = tmp;
+				return;
+			} else {
+				Node<T> s = head;
+				Node<T> q = null;
+				while (s != null && (((Contact) s.data).compareTo((Contact) val) <= 0)) {
+					q = s;
+					s = s.next;
+				}
+				q.next = tmp;
+				tmp.next = s;
 			}
 		}
-	} */
+	}
+	/*public void addEvent(T val) {
+		Node<T> tmp = new Node<T>(val);
+		if (empty()) {
+			current = head = tmp;
+			return;
+		} else {
+			if (((Event) val).compareTo((Event) head.data) < 0) {
+				tmp.next = head;
+				head = tmp;
+				return;
+			} else {
+				Node<T> s = head;
+				Node<T> q = null;
+				while (s != null && (((Event) s.data).compareTo((Event) val) <= 0)) {
+					q = s;
+					s = s.next;
+				}
+				q.next = tmp;
+				tmp.next = s;
+			}
+		}
+	}*/
 
 	public void delete() {
 		if (current == head) {
@@ -87,8 +108,7 @@ public class LinkedList<T> {
 
 	public T search(T val) {
 		Node<T> tmp = head;
-		while (tmp.data != val) // or untill null? in case we use to search for duplicates or printing all
-								// contacts with same first name
+		while (tmp.data != val)
 			tmp = tmp.next;
 		return tmp.data;
 	}
@@ -129,39 +149,39 @@ public class LinkedList<T> {
 		System.out.println();
 	}
 
-    public void remove(){
-        if(current == head){
-            head = head.next;
-            current = current.next;
-        }
-        
-        else{
-            Node<T> p = head;
-            while(p.next != current)
-                p=p.next;
-                p.next=current.next;
-                if(current.next!=null)
-                    current=current.next;
-                else 
-                    current=head;
-            
-        }
-            
-    }
+	public void remove() {
+		if (current == head) {
+			head = head.next;
+			current = current.next;
+		}
 
-    public void insert(T d){
-        Node <T> p = new Node <T>(d);
-        if ( head == null){
-            head =p;
-            current = p;
-        }
-        
-        else {
-            p.next = current.next;
-            current.next=p;
-            current =p;
-        }
-    }
+		else {
+			Node<T> p = head;
+			while (p.next != current)
+				p = p.next;
+			p.next = current.next;
+			if (current.next != null)
+				current = current.next;
+			else
+				current = head;
+
+		}
+
+	}
+
+	public void insert(T d) {
+		Node<T> p = new Node<T>(d);
+		if (head == null) {
+			head = p;
+			current = p;
+		}
+
+		else {
+			p.next = current.next;
+			current.next = p;
+			current = p;
+		}
+	}
 
 	/*
 	 * public boolean currentIsNull() { return current == null; }

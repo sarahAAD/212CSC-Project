@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class PhoneBook {
 	static LinkedList<Contact> ContactLinkedList = new LinkedList<>();
+	static LinkedList<Event> eventlist = new LinkedList<>();
 
 	public static void main(String[] args) {
 		PhoneBook PhoneBook = new PhoneBook();
@@ -86,7 +87,7 @@ public class PhoneBook {
 						contacts.FindFirst();
 						while (!contacts.last()) {
 							System.out.println(contacts.retrieve());
-							ContactLinkedList.FindNext();
+							contacts.FindNext();
 						}
 						System.out.println(contacts.retrieve());
 					} else
@@ -102,7 +103,7 @@ public class PhoneBook {
 						contacts.FindFirst();
 						while (!contacts.last()) {
 							System.out.println(contacts.retrieve());
-							ContactLinkedList.FindNext();
+							contacts.FindNext();
 						}
 						System.out.println(contacts.retrieve());
 					} else
@@ -118,7 +119,7 @@ public class PhoneBook {
 						contacts.FindFirst();
 						while (!contacts.last()) {
 							System.out.println(contacts.retrieve());
-							ContactLinkedList.FindNext();
+							contacts.FindNext();
 						}
 						System.out.println(contacts.retrieve());
 					} else
@@ -173,9 +174,12 @@ public class PhoneBook {
 				System.out.print("Enter event location:");
 				String eventLocation = scan.nextLine();
 				scan.nextLine();
-				Contact c = new Contact(PhoneBook.SearchByName(contactName));
+				Contact c =null;;
+				 if(PhoneBook.SearchByName(contactName)!=null) {
+				 c= PhoneBook.SearchByName(contactName);
 				Event e = new Event(eventTitle, eventTimeAndDate, eventLocation, c);
-				e.addEvent(e);
+				PhoneBook.AddEvent(e);}
+				 else System.out.println("Contact doesn't exist, please add the contact first");
 
 				break;
 
@@ -189,14 +193,10 @@ public class PhoneBook {
 
 					System.out.print("Enter contact name:");
 					String eventContactName = scan.nextLine();
-
-					Contact contact1;
-					if (PhoneBook.SearchByName(eventContactName) != null) {
-						contact1 = PhoneBook.SearchByName(eventContactName);
-						event = contact1.SearchByContactName(eventContactName);
-						if (event != null)
-							System.out.println(event.toString());
-					} else
+					event = PhoneBook.SearchEventByContactName(eventContactName);
+					if (event != null)
+						System.out.println(event.toString());
+					else
 						System.out.println("Event not found");
 
 					break;
@@ -204,7 +204,7 @@ public class PhoneBook {
 				case "2":
 					System.out.print("Enter event title:");
 					String EventTitle = scan.nextLine();
-					event = PhoneBook.ContactLinkedList.retrieve().SearchByTitle(EventTitle);
+					event = PhoneBook.SearchEventByTitle(EventTitle);
 					if (event != null)
 						System.out.println(event.toString());
 					else
@@ -221,7 +221,7 @@ public class PhoneBook {
 				PhoneBook.PrintSameFirstName(firstName);
 				break;
 
-			case "7": // print all events alphabetically
+			case "7": PhoneBook.printAllEvent();
 				break;
 
 			case "8":
@@ -262,6 +262,64 @@ public class PhoneBook {
 			}
 		}
 		return false;
+	}
+
+	public boolean AddEvent(Event event) {
+		if (eventlist.empty()) {
+			eventlist.insert(event);
+			return true;
+		} else {
+			eventlist.FindFirst();
+			while (!eventlist.last()) {
+				if (!eventlist.retrieve().isExist(event)
+						&& !eventlist.retrieve().getEventTitle().equals(event.getEventTitle())) {
+					eventlist.insert(event);
+					return true;
+				}
+
+				eventlist.FindNext();
+			}
+			if (!eventlist.retrieve().isExist(event)
+					&& !eventlist.retrieve().getEventTitle().equals(event.getEventTitle())) {
+				eventlist.insert(event);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Event SearchEventByTitle(String title) {
+		Event event = null;
+		if (!eventlist.empty()) {
+			eventlist.FindFirst();
+			while (!eventlist.last()) {
+				if (eventlist.retrieve().getEventTitle().equals(title))
+					event = eventlist.retrieve();
+
+				eventlist.FindNext();
+			}
+			if (eventlist.retrieve().getEventTitle().equals(title))
+				event = eventlist.retrieve();
+		}
+
+		return event;
+	}
+
+	public Event SearchEventByContactName(String name) {
+		Event event = null;
+		if (!eventlist.empty()) {
+			eventlist.FindFirst();
+			while (!eventlist.last()) {
+				if (eventlist.retrieve().getContact().getName().equals(name))
+					event = eventlist.retrieve();
+
+				eventlist.FindNext();
+			}
+			if (eventlist.retrieve().getContact().getName().equals(name))
+				event = eventlist.retrieve();
+		}
+
+		return event;
 	}
 
 	public LinkedList<Contact> SearchByAddress(String address) {
@@ -323,16 +381,15 @@ public class PhoneBook {
 
 			while (!ContactLinkedList.last()) {
 				if (ContactLinkedList.retrieve().getBirthday().equals(birthday))
-
-					Contacts.insert(ContactLinkedList.retrieve());
+					Contacts.add(ContactLinkedList.retrieve());
 				ContactLinkedList.FindNext();
 			}
 			if (ContactLinkedList.retrieve().getBirthday().equals(birthday))
-				Contacts.insert(ContactLinkedList.retrieve());
+				Contacts.add(ContactLinkedList.retrieve());
 
 			return Contacts;
 		}
-		return Contacts;
+		return null;
 
 	}
 
@@ -436,7 +493,8 @@ public class PhoneBook {
 		}
 		if (ContactLinkedList.retrieve().getPhoneNumber().equals(phoneNumber)) {
 			ContactLinkedList.remove();
-			ContactLinkedList.retrieve().getEvent().getEventList().serve();
+			ContactLinkedList.retrieve().getEvent().getEventList().remove();
+			;
 			return true;
 		}
 
@@ -463,4 +521,17 @@ public class PhoneBook {
 		return false;
 	}
 
+	public void printAllEvent() {
+		if (eventlist.empty()) {
+			System.out.println("there is no event");
+			return;
+		}
+		eventlist.FindFirst();
+		while (!eventlist.last()) {
+			System.out.println(eventlist.retrieve());
+			eventlist.FindNext();
+		}
+		System.out.println(eventlist.retrieve());
+
+	}
 }

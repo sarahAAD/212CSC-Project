@@ -2,7 +2,7 @@ package Phonebook;
 
 public class Contact extends Event implements Comparable<Contact>{
 	private String Name, PhoneNumber, Email, Address, Birthday, Notes;
-//	private LinkedList <Event> eventList = new LinkedList<>();
+    private LinkedList <Event> eventList = new LinkedList<>();
     private Event event;
 	
 	
@@ -33,14 +33,13 @@ public class Contact extends Event implements Comparable<Contact>{
 
 	@Override
 	public int compareTo(Contact contact) {
-
 		return Name.compareTo(contact.Name);
 	}
 
 	@Override
 	public String toString() {
 		return "Name:" + Name + "\nPhoneNumber:" + PhoneNumber + "\nEmail:" + Email + "\nAddress:"
-				+ Address + "\nBirthday:" + Birthday + "\nnotes:" + Notes ;
+				+ Address + "\nBirthday:" + Birthday + "\nnotes:" + Notes+"\n" ;
 	}
 
 	public String getName() {
@@ -92,7 +91,7 @@ public class Contact extends Event implements Comparable<Contact>{
 	}
 
 
-	public LinkedListQueue getEventList() {
+	public LinkedList getEventList() {
 		return event.getEventList();
 	}
 

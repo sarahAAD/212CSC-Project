@@ -42,6 +42,8 @@ public class PhoneBook {
 				c1.setNotes(notes);
 				if (PhoneBook.AddContact(c1))
 					System.out.println("\nContact added successfully!");
+				else
+					System.out.println("\nThis Contact has been added before!");
 
 				break;
 
@@ -56,7 +58,7 @@ public class PhoneBook {
 				case "1":
 					System.out.print("Enter the contact's name:");
 					String contactName = scan.nextLine();
-					contact = PhoneBook.SearchByName(contactName);	
+					contact = PhoneBook.SearchByName(contactName);
 					if (contact != null)
 						System.out.println(contact.toString());
 					else
@@ -170,6 +172,7 @@ public class PhoneBook {
 				String eventTimeAndDate = scan.nextLine();
 				System.out.print("Enter event location:");
 				String eventLocation = scan.nextLine();
+				scan.nextLine();
 				Contact c = new Contact(PhoneBook.SearchByName(contactName));
 				Event e = new Event(eventTitle, eventTimeAndDate, eventLocation, c);
 				e.addEvent(e);
@@ -183,14 +186,19 @@ public class PhoneBook {
 
 				switch (eventInput) { // nested switch
 				case "1":
+
 					System.out.print("Enter contact name:");
 					String eventContactName = scan.nextLine();
-					Contact contact1 = new Contact(PhoneBook.SearchByName(eventContactName));
-					event = contact1.getEvent();
-					if (event != null)
-						System.out.println(contact1.getEvent().toString());
-					else
+
+					Contact contact1;
+					if (PhoneBook.SearchByName(eventContactName) != null) {
+						contact1 = PhoneBook.SearchByName(eventContactName);
+						event = contact1.SearchByContactName(eventContactName);
+						if (event != null)
+							System.out.println(event.toString());
+					} else
 						System.out.println("Event not found");
+
 					break;
 
 				case "2":
@@ -219,6 +227,14 @@ public class PhoneBook {
 			case "8":
 				return;
 
+			case "9": // just to check that the contacts are sorted correctly
+				ContactLinkedList.FindFirst();
+				while (!ContactLinkedList.last()) {
+					System.out.println(ContactLinkedList.retrieve());
+					ContactLinkedList.FindNext();
+				}
+				System.out.println(ContactLinkedList.retrieve());
+
 			}
 		} while (choice != "8");
 
@@ -226,49 +242,52 @@ public class PhoneBook {
 
 	public boolean AddContact(Contact contact) {
 		if (ContactLinkedList.empty()) {
-			ContactLinkedList.insert(contact);
-			return true;}
-		ContactLinkedList.FindFirst();
-		while (!ContactLinkedList.last()) {
-			if (ContactLinkedList.retrieve().getName().equalsIgnoreCase(contact.getName())
-					|| ContactLinkedList.retrieve().getPhoneNumber().equals(contact.getPhoneNumber()))
-				return false;
-			else
-				ContactLinkedList.FindNext();
-		}
-		if (ContactLinkedList.retrieve().getName().equalsIgnoreCase(contact.getName())
-				|| ContactLinkedList.retrieve().getPhoneNumber().equals(contact.getPhoneNumber()))
-			return false;
-		else {
-			ContactLinkedList.insert(contact);
+			ContactLinkedList.add(contact);
 			return true;
+		} else {
+			ContactLinkedList.FindFirst();
+			while (!ContactLinkedList.last()) {
+				if (!ContactLinkedList.retrieve().getName().equalsIgnoreCase(contact.getName())
+						&& !ContactLinkedList.retrieve().getPhoneNumber().equals(contact.getPhoneNumber())) {
+					ContactLinkedList.add(contact);
+					return true;
+				}
+
+				ContactLinkedList.FindNext();
+			}
+			if (!ContactLinkedList.retrieve().getName().equalsIgnoreCase(contact.getName())
+					&& !ContactLinkedList.retrieve().getPhoneNumber().equals(contact.getPhoneNumber())) {
+				ContactLinkedList.add(contact);
+				return true;
+			}
 		}
+		return false;
 	}
 
 	public LinkedList<Contact> SearchByAddress(String address) {
 		LinkedList<Contact> Contacts = new LinkedList<>();
-		if (!ContactLinkedList.empty()) {
-			ContactLinkedList.FindFirst();
-			while (!ContactLinkedList.last()) {
-				if (ContactLinkedList.retrieve().getAddress().equalsIgnoreCase(address))
-					Contacts.add(ContactLinkedList.retrieve());
-				ContactLinkedList.FindNext();
-			}
-			if (ContactLinkedList.retrieve().getAddress().equalsIgnoreCase(address))
-				Contacts.add(ContactLinkedList.retrieve());
-
+		if (ContactLinkedList.empty())
 			return Contacts;
-		} else
-			return null;
+
+		ContactLinkedList.FindFirst();
+		while (!ContactLinkedList.last()) {
+			if (ContactLinkedList.retrieve().getAddress().equals(address))
+				Contacts.insert(ContactLinkedList.retrieve());
+			ContactLinkedList.FindNext();
+		}
+		if (ContactLinkedList.retrieve().getAddress().equals(address))
+			Contacts.insert(ContactLinkedList.retrieve());
+
+		return Contacts;
 
 	}
 
 	public Contact SearchByName(String name) {
-		Contact contact = new Contact();
+		Contact contact = null;
 		if (!ContactLinkedList.empty()) {
 			ContactLinkedList.FindFirst();
 			while (!ContactLinkedList.last()) {
-				if (ContactLinkedList.retrieve().getName().equalsIgnoreCase(name)) 
+				if (ContactLinkedList.retrieve().getName().equalsIgnoreCase(name))
 					contact = ContactLinkedList.retrieve();
 
 				ContactLinkedList.FindNext();
@@ -285,7 +304,7 @@ public class PhoneBook {
 		if (!ContactLinkedList.empty()) {
 			ContactLinkedList.FindFirst();
 			while (!ContactLinkedList.last()) {
-				if (ContactLinkedList.retrieve().getPhoneNumber().equalsIgnoreCase(PhoneNumber)) 
+				if (ContactLinkedList.retrieve().getPhoneNumber().equalsIgnoreCase(PhoneNumber))
 					contact = ContactLinkedList.retrieve();
 
 				ContactLinkedList.FindNext();
@@ -346,32 +365,36 @@ public class PhoneBook {
 					ContactLinkedList.FindNext();
 
 			}
-			if (ContactLinkedList.retrieve().getEventTitle().equalsIgnoreCase(event)) {
+			if (ContactLinkedList.retrieve().getEventTitle().equalsIgnoreCase(event))
 				System.out.println(ContactLinkedList.retrieve());
-			}
 
 		} else
 			System.out.println("There is no event with this name");
 	}
 
 	public void PrintSameFirstName(String name) {
-		String FirstName = null;
-		if (!ContactLinkedList.empty()) {
+		String FirstName;
+		int index;
+		if (ContactLinkedList.empty())
+			System.out.println("There is no contact with this name");
+		else {
 			ContactLinkedList.FindFirst();
 			while (!ContactLinkedList.last()) {
-				FirstName = ContactLinkedList.retrieve().getName().substring(0,
-						ContactLinkedList.retrieve().getName().indexOf(' '));
-				if (FirstName.equalsIgnoreCase(name)) {
+				index = ContactLinkedList.retrieve().getName().indexOf(" ");
+				FirstName = ContactLinkedList.retrieve().getName().substring(0, index);
+				if (FirstName.equals(name))
 					System.out.println(ContactLinkedList.retrieve().toString());
-					ContactLinkedList.FindNext();
-				} else
-					ContactLinkedList.FindNext();
+
+				ContactLinkedList.FindNext();
 
 			}
-			if (ContactLinkedList.retrieve().getName().equalsIgnoreCase(name)) {
-				System.out.println(ContactLinkedList.retrieve());
-			}
-		} else
+		}
+		index = ContactLinkedList.retrieve().getName().indexOf(" ");
+		FirstName = ContactLinkedList.retrieve().getName().substring(0, index);
+		if (FirstName.equalsIgnoreCase(name))
+			System.out.println(ContactLinkedList.retrieve().toString());
+
+		else
 			System.out.println("There is no contact with this name");
 
 	}
@@ -384,14 +407,14 @@ public class PhoneBook {
 		while (!ContactLinkedList.last()) {
 			if (ContactLinkedList.retrieve().getName().equals(name)) {
 				ContactLinkedList.remove();
-				;
+
 				return true;
 			} else
 				ContactLinkedList.FindNext();
 		}
 		if (ContactLinkedList.retrieve().getName().equals(name)) {
 			ContactLinkedList.remove();
-			;
+
 			return true;
 		}
 
@@ -406,14 +429,14 @@ public class PhoneBook {
 		while (!ContactLinkedList.last()) {
 			if (ContactLinkedList.retrieve().getPhoneNumber().equals(phoneNumber)) {
 				ContactLinkedList.remove();
-				;
+
 				return true;
 			} else
 				ContactLinkedList.FindNext();
 		}
 		if (ContactLinkedList.retrieve().getPhoneNumber().equals(phoneNumber)) {
 			ContactLinkedList.remove();
-			;
+			ContactLinkedList.retrieve().getEvent().getEventList().serve();
 			return true;
 		}
 

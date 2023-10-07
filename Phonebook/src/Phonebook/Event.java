@@ -5,7 +5,7 @@ public class Event extends PhoneBook {
 	private String DateAndTime;
 	private String location;
 	private Contact contact;
-	private LinkedListQueue eventList;
+	private LinkedListQueue eventList = new LinkedListQueue();
 	LinkedList<Contact> ContactList = new LinkedList<>();
 
 	public Event() {
@@ -16,55 +16,42 @@ public class Event extends PhoneBook {
 		this.DateAndTime = DateAndTime;
 		this.location = location;
 		contact = new Contact(c);
-		eventList = new LinkedListQueue();
 
 	}
 
 	public void addEvent(Event event) {
-		if (!ContactLinkedList.empty()) {
-			ContactLinkedList.FindFirst();
-			while (!ContactLinkedList.last()) {
-				if (ContactLinkedList.retrieve().getEvent() == null) {
-					eventList.enqueue(event);
-				} 
-				else if (ContactLinkedList.retrieve().getName().equalsIgnoreCase(event.contact.getName())&& (!ContactLinkedList.retrieve().getEvent().DateAndTime.equals(event.DateAndTime)))
-					eventList.enqueue(event);
-				else
-					ContactLinkedList.FindNext();
-			}
-
-			if (ContactLinkedList.retrieve().getEvent() == null) {
-				eventList.enqueue(event);
-			} 
-			else if (ContactLinkedList.retrieve().getName().equalsIgnoreCase(event.contact.getName())&& (!ContactLinkedList.retrieve().getEvent().DateAndTime.equals(event.DateAndTime)))
-				eventList.enqueue(event);			
-
-		}
-
-	else System.out.println("This contact doesn't exist, can't add the event");
+		if (!isExist(event)) {
+			eventList.enqueue(event);
+		System.out.println("event added successfully!");}
+		else
+			System.out.println("This contact doesn't exist, can't add the event");
 
 	}
 
 	public Event SearchByTitle(String Title) {
-		int size = eventList.length();
-		for (int i = 1; i <= size; i++) {
-			Event temp = eventList.serve();
-			if (temp.eventTitle.equalsIgnoreCase(Title)) {
+		Event temp = null;
+		if (eventList.length() != 0) {
+			int size = eventList.length();
+			for (int i = 1; i <= size; i++) {
+				temp = eventList.serve();
 				eventList.enqueue(temp);
-				return temp;
+				if (temp.eventTitle.equalsIgnoreCase(Title)) {
+				}
 			}
 		}
-		System.out.println("This event doesn't exist");
-		return null;
+		return temp;
+
 	}
 
 	public Event SearchByContactName(String Name) {
-		int size = eventList.length();
-		for (int i = 1; i <= size; i++) {
-			Event temp = eventList.serve();
-			if (temp.contact.getName().equalsIgnoreCase(Name)) {
-				eventList.enqueue(temp);
-				return temp;
+		if (eventList.length() != 0) {
+			int size = eventList.length();
+			for (int i = 1; i <= size; i++) {
+				Event temp = eventList.serve();
+				if (temp.contact.getName().equalsIgnoreCase(Name)) {
+					eventList.enqueue(temp);
+					return temp;
+				}
 			}
 		}
 		System.out.println("This event doesn't exist");
@@ -80,6 +67,31 @@ public class Event extends PhoneBook {
 
 			}
 		}
+
+	}
+
+	public boolean isExist(Event event) {
+		if (ContactLinkedList.empty())
+			return false;
+		else {
+			ContactLinkedList.FindFirst();
+			while (!ContactLinkedList.last()) {
+				if (ContactLinkedList.retrieve().getEvent() != null) {
+					if (ContactLinkedList.retrieve().getName().equalsIgnoreCase(event.contact.getName())
+							&& (!ContactLinkedList.retrieve().getEvent().DateAndTime.equals(event.DateAndTime)))
+						return true;
+				}
+				ContactLinkedList.FindNext();
+			}
+
+		}
+		if (ContactLinkedList.retrieve().getEvent() != null) 
+			if (ContactLinkedList.retrieve().getName().equalsIgnoreCase(event.contact.getName())
+					&& (!ContactLinkedList.retrieve().getEvent().DateAndTime.equals(event.DateAndTime)))
+				return true;
+		
+
+			return false;
 
 	}
 

@@ -28,7 +28,7 @@ public class LinkedListQueue {
         size++;
     }
     
-    public Event servr(){
+    public Event serve(){
         Event node=Head.data;
         Head = Head.next;
         if(Head==null)

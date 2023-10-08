@@ -64,6 +64,9 @@ public class PhoneBook {
 						System.out.println(contact.toString());
 					else
 						System.out.println("There is no contact with this name");
+
+						LinkedList<Event> ContactEventsByName = PhoneBook.findEventsOfContact(PhoneBook.SearchByName(deleteName));
+						PhoneBook.deleteEvent(ContactEventsByName.retrieve());
 					break;
 
 				case "2": // search by contact phone number
@@ -76,6 +79,9 @@ public class PhoneBook {
 					else {
 						System.out.println("There is no contact with this phone number");
 					}
+
+						LinkedList<Event> ContactEventsByNumber = PhoneBook.findEventsOfContact(PhoneBook.SearchByPhoneNumber(deletePhoneNumber));
+						PhoneBook.deleteEvent(ContactEventsByNumber.retrieve());
 
 					break;
 
@@ -92,6 +98,10 @@ public class PhoneBook {
 						System.out.println(contacts.retrieve());
 					} else
 						System.out.println("There is no contact with this email");
+
+						//LinkedList<Event> ContactEventsByEmail = PhoneBook.findEventsOfContact(PhoneBook.SearchByEmail(deleteEmail));
+						//PhoneBook.deleteEvent(ContactEventsByEmail.retrieve());
+						//should change the search by email method so that it returns one contact instead of a list, then this wouldnt cause an error
 
 					break;
 
@@ -540,6 +550,43 @@ public class PhoneBook {
 		}
 		System.out.println(eventList.retrieve());
 
+	}
+
+	public boolean deleteEvent(Event e){
+		if (eventList.empty()) {
+		System.out.println("This contact has no events");
+		return false;
+		}
+		eventList.FindFirst();
+		while (!eventList.last()){
+			if (eventList.retrieve().equals(e)){
+			eventList.remove();
+			return true;
+			}
+			else
+			eventList.FindNext();
+		}
+		if (eventList.retrieve().equals(e)){
+			eventList.remove();
+			return true;
+			}
+			return false;
+	}
+
+	public LinkedList<Event> findEventsOfContact(Contact c){
+		LinkedList<Event> contactEvents = new LinkedList<>();
+		if (eventList.empty())
+		System.out.println("This contact has no events");
+
+		while (!eventList.last()){
+			if (eventList.retrieve().getContact().equals(c)){
+				contactEvents.insert(eventList.retrieve());
+				eventList.FindNext();
+			}
+		}
+		if (eventList.retrieve().getContact().equals(c))
+				contactEvents.insert(eventList.retrieve());
+		return contactEvents;
 	}
 
 }

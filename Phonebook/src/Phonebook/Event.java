@@ -78,16 +78,16 @@ public class Event extends PhoneBook {
 		this.contact = contact;
 	}
 
-	public LinkedList getEventList() {
+	public LinkedList<Event> getEventList() {
 		return eventList;
 	}
 
-	public void setEventList(LinkedList eventList) {
+	public void setEventList(LinkedList<Event> eventList) {
 		this.eventList = eventList;
 	}
 
 	public String toString() {
-		return "eventTitle:" + eventTitle + "\nDateAndTime:" + DateAndTime + "\nlocation:" + location + "\ncontact name:"
+		return "Event title:" + eventTitle + "\nDate and time:" + DateAndTime + "\nlocation:" + location + "\ncontact name:"
 				+ contact.getName() ;
 	}
 

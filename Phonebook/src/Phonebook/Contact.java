@@ -2,14 +2,14 @@ package Phonebook;
 
 public class Contact extends Event implements Comparable<Contact>{
 	private String Name, PhoneNumber, Email, Address, Birthday, Notes;
-    private LinkedList <Event> eventList = new LinkedList<>();
-    private Event event;
+	private LinkedList <Event> eventList = new LinkedList<>();
+    private LinkedList<Event> event;
 	
 	
 	public Contact() {
 	}
 
-	public Contact(String name, String phoneNumber, String email, String address, String birthday, String notes,Event Event) {
+	public Contact(String name, String phoneNumber, String email, String address, String birthday, String notes, LinkedList<Event> Event) {
 		Name = name;
 		PhoneNumber = phoneNumber;
 		Email = email;
@@ -33,13 +33,14 @@ public class Contact extends Event implements Comparable<Contact>{
 
 	@Override
 	public int compareTo(Contact contact) {
+
 		return Name.compareTo(contact.Name);
 	}
 
 	@Override
 	public String toString() {
-		return "Name:" + Name + "\nPhoneNumber:" + PhoneNumber + "\nEmail:" + Email + "\nAddress:"
-				+ Address + "\nBirthday:" + Birthday + "\nnotes:" + Notes+"\n" ;
+		return "\nName: " + Name + "\nPhoneNumber: " + PhoneNumber + "\nEmail: " + Email + "\nAddress: "
+				+ Address + "\nBirthday: " + Birthday + "\nnotes: " + Notes+"\n" ;
 	}
 
 	public String getName() {
@@ -91,19 +92,19 @@ public class Contact extends Event implements Comparable<Contact>{
 	}
 
 
-	public LinkedList getEventList() {
+	/*public LinkedList<Event> getEventList() {
 		return event.getEventList();
-	}
+	}*/
 
 	//public void setEventList(LinkedList<Event> eventList) {
 		//this.eventList = eventList;
 	//}
 
-	public Event getEvent() {
+	public LinkedList<Event> getEvent() {
 		return event;
 	}
 
-	public void setEvent(Event event) {
+	public void setEvent(LinkedList<Event> event) {
 		this.event = event;
 	}
 

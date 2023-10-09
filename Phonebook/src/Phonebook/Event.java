@@ -19,7 +19,10 @@ public class Event extends PhoneBook {
 
 	}
 
-
+/* public int compareTo(Event val) {
+		return eventTitle.compareTo(val.eventTitle);
+	}
+	*/
 
 	public boolean isExist(Event event) {
 		if (ContactLinkedList.empty())

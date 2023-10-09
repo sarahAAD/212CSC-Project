@@ -298,7 +298,17 @@ public class PhoneBook {
 		}
 		return false;
 	}
-
+	
+	 /*public void AddEvent(Event e) {
+			Event r =	SearchEventByTitle(e.getEventTitle());
+			if(r==null) {
+				eventList.addEvent(r);
+			}
+					
+			
+			
+		}
+*/
 	public Event SearchEventByTitle(String title) {
 		Event event = null;
 		if (!eventList.empty()) {

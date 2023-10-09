@@ -22,9 +22,12 @@ public class LinkedList<T> {
 		return head == null;
 	}
 
-	public boolean last() {
-		return current.next == null;
-	}
+	public boolean last(){
+		if (current == null)
+		return true;
+         return current.next == null;
+
+    }
 
 	public boolean full() {
 		return false;
@@ -38,9 +41,13 @@ public class LinkedList<T> {
 		current = current.next;
 	}
 
-	public T retrieve() {
-		return current.data;
-	}
+	 public T retrieve(){
+		if (current == null)
+		return null;
+        if(head==null)
+            return null;
+        return current.data;
+    }
 
 	public void update(T val) {
 		current.data = val;

@@ -22,12 +22,11 @@ public class LinkedList<T> {
 		return head == null;
 	}
 
-	public boolean last(){
+	public boolean last() {
 		if (current == null)
-		return true;
-         return current.next == null;
-
-    }
+			return true;
+		return current.next == null;
+	}
 
 	public boolean full() {
 		return false;
@@ -41,19 +40,16 @@ public class LinkedList<T> {
 		current = current.next;
 	}
 
-	 public T retrieve(){
-		if (current == null)
-		return null;
-        if(head==null)
-            return null;
-        return current.data;
-    }
+	public T retrieve() {
+
+		return current.data;
+	}
 
 	public void update(T val) {
 		current.data = val;
 	}
 
-	public void add(T val) {
+	public void AddContact(T val) {
 		Node<T> tmp = new Node<T>(val);
 		if (empty()) {
 			current = head = tmp;
@@ -75,7 +71,8 @@ public class LinkedList<T> {
 			}
 		}
 	}
-	/*public void addEvent(T val) {
+
+	public void AddEvent(T val) {
 		Node<T> tmp = new Node<T>(val);
 		if (empty()) {
 			current = head = tmp;
@@ -96,21 +93,6 @@ public class LinkedList<T> {
 				tmp.next = s;
 			}
 		}
-	}*/
-
-	public void delete() {
-		if (current == head) {
-			head = head.next;
-		} else {
-			Node<T> tmp = head;
-			while (tmp.next != current)
-				tmp = tmp.next;
-			tmp.next = current.next;
-		}
-		if (current.next == null)
-			current = head;
-		else
-			current = current.next;
 	}
 
 	public T search(T val) {
@@ -120,57 +102,21 @@ public class LinkedList<T> {
 		return tmp.data;
 	}
 
-	public T search2(T val) {
-		Node<T> tmp = head;
-		while (tmp != null && tmp.data != val) // or should i use || instead of &&? for the same reasons listed above
-			tmp = tmp.next;
-		return tmp.data;
-	}
-
-	/*
-	 * public void sort(){
-	 * 
-	 * // Node current will point to head current = head; Node<T> index = null; int
-	 * tmp;
-	 * 
-	 * if (head == null) { return ; } else { while (current != null) { // Node index
-	 * will point to node next to cuurent index = current.next;
-	 * 
-	 * while (index != null) { if (current.data > index.data) { tmp = current.data;
-	 * current.data = index.data; index.data = tmp; }
-	 * 
-	 * index = index.next; } current = current.next; } } }
-	 */
-
-	public void display() {
-		current = head;
-
-		if (head == null)
-			System.out.println("List is empty");
-
-		while (current != null) {
-			System.out.print(current.data + " ");
-			current = current.next;
-		}
-
-		System.out.println();
-	}
-
 	public void remove() {
 		if (current == head) {
 			head = head.next;
-			current = current.next;
 		}
 
 		else {
-			Node<T> p = head;
-			while (p.next != current)
-				p = p.next;
-			p.next = current.next;
-			if (current.next != null)
-				current = current.next;
-			else
+			Node<T> tmp = head;
+			while (tmp.next != current)
+				tmp = tmp.next;
+			tmp.next = current.next;
+
+			if (current.next == null)
 				current = head;
+			else
+				current = current.next;
 
 		}
 
@@ -190,9 +136,4 @@ public class LinkedList<T> {
 		}
 	}
 
-	/*
-	 * public boolean currentIsNull() { return current == null; }
-	 */
-
-	// for the sorting method we can use ascii of the letters?...
 }

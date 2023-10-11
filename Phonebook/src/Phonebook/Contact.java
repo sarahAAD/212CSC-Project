@@ -1,15 +1,15 @@
 package Phonebook;
 
-public class Contact extends Event implements Comparable<Contact>{
+public class Contact extends Event implements Comparable<Contact> {
 	private String Name, PhoneNumber, Email, Address, Birthday, Notes;
-	private LinkedList <Event> eventList = new LinkedList<>();
-    private LinkedList<Event> event;
-	
-	
+	private LinkedList<Event> ContactEvents = new LinkedList<>();
+	private Event event;
+
 	public Contact() {
 	}
 
-	public Contact(String name, String phoneNumber, String email, String address, String birthday, String notes, LinkedList<Event> Event) {
+	public Contact(String name, String phoneNumber, String email, String address, String birthday, String notes,
+			Event Event) {
 		Name = name;
 		PhoneNumber = phoneNumber;
 		Email = email;
@@ -17,6 +17,7 @@ public class Contact extends Event implements Comparable<Contact>{
 		Birthday = birthday;
 		Notes = notes;
 		event = Event;
+		ContactEvents.insert(Event);
 	}
 
 	public Contact(Contact obj) {
@@ -27,7 +28,7 @@ public class Contact extends Event implements Comparable<Contact>{
 		Birthday = obj.Birthday;
 		Notes = obj.Notes;
 		event = obj.event;
-		//eventList.add(obj.event);
+		ContactEvents.insert(obj.event);
 
 	}
 
@@ -37,10 +38,9 @@ public class Contact extends Event implements Comparable<Contact>{
 		return Name.compareTo(contact.Name);
 	}
 
-	@Override
 	public String toString() {
-		return "\nName: " + Name + "\nPhoneNumber: " + PhoneNumber + "\nEmail: " + Email + "\nAddress: "
-				+ Address + "\nBirthday: " + Birthday + "\nnotes: " + Notes+"\n" ;
+		return "Name:" + Name + "\nPhoneNumber:" + PhoneNumber + "\nEmail:" + Email + "\nAddress:" + Address
+				+ "\nBirthday:" + Birthday + "\nnotes:" + Notes + "\n";
 	}
 
 	public String getName() {
@@ -91,23 +91,21 @@ public class Contact extends Event implements Comparable<Contact>{
 		this.Notes = notes;
 	}
 
+	public LinkedList<Event> getContactEvents() {
+		return ContactEvents;
+	}
 
-	/*public LinkedList<Event> getEventList() {
-		return event.getEventList();
-	}*/
+	public void setContactEvents(Event event) {
+		ContactEvents.AddEvent(event);
+		;
+	}
 
-	//public void setEventList(LinkedList<Event> eventList) {
-		//this.eventList = eventList;
-	//}
-
-	public LinkedList<Event> getEvent() {
+	public Event getEvent() {
 		return event;
 	}
 
-	public void setEvent(LinkedList<Event> event) {
+	public void setEvent(Event event) {
 		this.event = event;
 	}
-
-
 
 }

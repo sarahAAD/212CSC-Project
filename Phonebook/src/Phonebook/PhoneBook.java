@@ -257,8 +257,12 @@ public class PhoneBook {
 			case "8":
 				System.out.println("Enter event title");
 				String EventTitle = scan.nextLine();
-				PhoneBook.PrintSameEvent(EventTitle);
-
+				System.out.println("Enter event date and time (MM/DD/YYYY HH:MM):");
+				String DateAndTime = scan.nextLine();
+				System.out.println("Enter event location:");
+				String Location = scan.nextLine();
+				PhoneBook.PrintSameEvent(EventTitle, DateAndTime, Location);
+				break;
 			case "9":
 				return;
 
@@ -475,19 +479,25 @@ public class PhoneBook {
 
 	}
 
-	public void PrintSameEvent(String event) {
-		if (ContactLinkedList.empty())
+	public void PrintSameEvent(String eventName, String DateAndTime, String Location) {
+		if (eventList.empty())
 			System.out.println("There is no event with this name");
 		else {
-			ContactLinkedList.FindFirst();
-			while (!ContactLinkedList.last()) {
-				if (ContactLinkedList.retrieve().getEventTitle().equalsIgnoreCase(event))
-					System.out.println(ContactLinkedList.retrieve());
-				ContactLinkedList.FindNext();
+			eventList.FindFirst();
+			while (!eventList.last()) {
+				if (eventList.retrieve().getEventTitle().equalsIgnoreCase(eventName)
+						&& eventList.retrieve().getDateAndTime().equals(DateAndTime)
+						&& eventList.retrieve().getLocation().equals(Location)) 
+					System.out.println(eventList.retrieve().getContact());
+				
+				eventList.FindNext();
 
 			}
-			if (ContactLinkedList.retrieve().getEventTitle().equalsIgnoreCase(event))
-				System.out.println(ContactLinkedList.retrieve());
+			if (eventList.retrieve().getEventTitle().equalsIgnoreCase(eventName)
+					&& eventList.retrieve().getDateAndTime().equals(DateAndTime)
+					&& eventList.retrieve().getLocation().equals(Location)) {
+				System.out.println(eventList.retrieve().getContact());}
+
 		}
 	}
 

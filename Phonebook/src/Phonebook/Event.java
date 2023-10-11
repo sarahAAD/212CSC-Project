@@ -5,64 +5,30 @@ public class Event extends PhoneBook {
 	private String DateAndTime;
 	private String location;
 	private Contact contact;
-	//public LinkedList<Event> eventList;
-	
-	public Event(){
-    };
+	private String ContactName;
 
-	public Event(String eventTitle, String DateAndTime, String location, Contact c) {
+	public Event() {
+	};
+
+	public Event(Event event) {
+		eventTitle = event.eventTitle;
+		DateAndTime = event.DateAndTime;
+		location = event.location;
+		contact = new Contact(event.contact);
+		ContactName = event.ContactName;
+	}
+
+	public Event(String eventTitle, String DateAndTime, String location, Contact c, String contactName) {
 		this.eventTitle = eventTitle;
 		this.DateAndTime = DateAndTime;
 		this.location = location;
 		contact = new Contact(c);
+		ContactName = contactName;
 	}
 
-
-
-    public boolean isExist(Event event) {                                                            //practically made to answer the question of wether a contact has a certain event  or not
-		if (ContactLinkedList.empty())
-			return false;
-		else {
-			ContactLinkedList.FindFirst();
-			while (!ContactLinkedList.last()) {
-				if (ContactLinkedList.retrieve().getEvent() != null) {                                  //if the contact actually has any events
-					if (ContactLinkedList.retrieve().getName().equalsIgnoreCase(event.contact.getName())
-							&& (!ContactLinkedList.retrieve().getEvent().retrieve().DateAndTime.equals(event.DateAndTime)))
-						return true;
-				}
-				ContactLinkedList.FindNext();
-			}
-
-		}
-		if (ContactLinkedList.retrieve().getEvent() != null) 
-			if (ContactLinkedList.retrieve().getName().equalsIgnoreCase(event.contact.getName())
-					&& (!ContactLinkedList.retrieve().getEvent().retrieve().DateAndTime.equals(event.DateAndTime)))
-				return true;
-
-
-			return false;
-
+	public int compareTo(Event event) {
+		return eventTitle.compareTo(event.eventTitle);
 	}
-
-	public boolean Exists (Event event){
-		if (eventList.empty())
-		return false;
-		else {
-			if (eventList.retrieve() != null){
-			eventList.FindFirst();
-			while (!eventList.last()){
-				if (eventList.retrieve() == null)
-				return false;
-				if (eventList.retrieve() != null && eventList.retrieve().getDateAndTime().equals(event.DateAndTime) && eventList.retrieve().getEventTitle().equals(event.eventTitle) && eventList.retrieve().getLocation().equals(event.location) )
-				return true;
-				eventList.FindNext();
-			}}
-			/*if (eventList.retrieve().getDateAndTime().equals(event.DateAndTime) && eventList.retrieve().getEventTitle().equals(event.eventTitle) && eventList.retrieve().getLocation().equals(event.location) && eventList.retrieve() != null)
-				return true;
-			}*/
-				return false;	
-		}
-	};
 
 	public String getEventTitle() {
 		return eventTitle;
@@ -96,19 +62,17 @@ public class Event extends PhoneBook {
 		this.contact = contact;
 	}
 
-	public LinkedList<Event> getEventList() {
-		return eventList;
-	}
-
-	public void setEventList(LinkedList<Event> eventList) {
-		this.eventList = eventList;
-	}
-
 	public String toString() {
-		return "\nevent title:" + eventTitle + "\nDate and time:" + DateAndTime + "\nlocation:" + location + "\ncontact name:"
-				+ contact.getName() ;
+		return "\nevent title:" + eventTitle + "\nDate and time:" + DateAndTime + "\nlocation:" + location
+				+ "\ncontact name:" + contact.getName();
 	}
-	
-	
+
+	public String getContactName() {
+		return ContactName;
+	}
+
+	public void setContactName(String contactName) {
+		ContactName = contactName;
+	}
 
 }

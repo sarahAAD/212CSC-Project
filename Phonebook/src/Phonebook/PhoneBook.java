@@ -510,18 +510,20 @@ public class PhoneBook {
 			ContactLinkedList.FindFirst();
 			while (!ContactLinkedList.last()) {
 				index = ContactLinkedList.retrieve().getName().indexOf(" ");
+				if (index !=-1) {
 				FirstName = ContactLinkedList.retrieve().getName().substring(0, index);
 				if (FirstName.equals(name))
-					System.out.println(ContactLinkedList.retrieve().toString());
+					System.out.println(ContactLinkedList.retrieve().toString());}
 
 				ContactLinkedList.FindNext();
 
 			}
-		}
+		} 
 		index = ContactLinkedList.retrieve().getName().indexOf(" ");
+		if (index !=-1) {
 		FirstName = ContactLinkedList.retrieve().getName().substring(0, index);
 		if (FirstName.equalsIgnoreCase(name))
-			System.out.println(ContactLinkedList.retrieve().toString());
+			System.out.println(ContactLinkedList.retrieve().toString());}
 
 		else
 			System.out.println("There is no contact with this name");

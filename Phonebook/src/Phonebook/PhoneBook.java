@@ -383,11 +383,11 @@ public class PhoneBook {
 		eventList.FindFirst();
 		while (!eventList.last()) {
 			if (eventList.retrieve().getContact().getName().equalsIgnoreCase(name))
-				event.AddContact(eventList.retrieve());
+				event.AddEvent(eventList.retrieve());
 			eventList.FindNext();
 		}
 		if (eventList.retrieve().getContact().getName().equalsIgnoreCase(name))
-			event.AddContact(eventList.retrieve());
+			event.AddEvent(eventList.retrieve());
 
 		return event;
 	}

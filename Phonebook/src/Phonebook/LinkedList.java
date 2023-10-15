@@ -51,7 +51,7 @@ public class LinkedList<T> {
 
 	public void AddContact(T val) {
 		Node<T> tmp = new Node<T>(val);
-		if (empty()) {
+		if (head==null) {
 			current = head = tmp;
 			return;
 		} else {
@@ -74,7 +74,7 @@ public class LinkedList<T> {
 
 	public void AddEvent(T val) {
 		Node<T> tmp = new Node<T>(val);
-		if (empty()) {
+		if (head==null) {
 			current = head = tmp;
 			return;
 		} else {

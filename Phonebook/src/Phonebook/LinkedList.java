@@ -1,4 +1,4 @@
-package PhoneBook;
+package Phonebook;
 
 class Node<T> {
 	public T data;

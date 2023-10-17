@@ -8,7 +8,7 @@ public class Event extends PhoneBook {
 	private String ContactName;
 
 	public Event() {
-	};
+	}
 
 	public Event(Event event) {
 		eventTitle = event.eventTitle;

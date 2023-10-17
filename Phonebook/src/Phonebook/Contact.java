@@ -97,7 +97,7 @@ public class Contact extends Event implements Comparable<Contact> {
 
 	public void setContactEvents(Event event) {
 		ContactEvents.AddEvent(event);
-		;
+		
 	}
 
 	public Event getEvent() {

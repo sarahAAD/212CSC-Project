@@ -263,38 +263,12 @@ public class PhoneBook {
 				String Location = scan.nextLine();
 				PhoneBook.PrintSameEvent(EventTitle, DateAndTime, Location);
 				break;
+
 			case "9":
 				return;
 
-			case "10": // just to check that the contacts are sorted correctly
-				if (ContactLinkedList.empty())
-					System.out.println("is empty");
-				else {
-					ContactLinkedList.FindFirst();
-					while (!ContactLinkedList.last()) {
-						System.out.println(ContactLinkedList.retrieve());
-						ContactLinkedList.FindNext();
-					}
-					System.out.println(ContactLinkedList.retrieve());
-
-				}
-				break;
-			case "11":
-				System.out.print("Enter the first name:");
-				String FirstName = scan.nextLine();
-				if (eventList.empty())
-					System.out.println("is empty");
-				else {
-					eventList.FindFirst();
-					while (!eventList.last()) {
-						if (eventList.retrieve().getContactName().equals(FirstName))
-							eventList.remove();
-						eventList.FindNext();
-					}
-					if (eventList.retrieve().getContactName().equals(FirstName))
-						eventList.remove();
-
-				}
+		
+				
 			}
 		} while (choice != "9");
 
@@ -383,11 +357,11 @@ public class PhoneBook {
 		eventList.FindFirst();
 		while (!eventList.last()) {
 			if (eventList.retrieve().getContact().getName().equalsIgnoreCase(name))
-				event.AddEvent(eventList.retrieve());
+				event.insert(eventList.retrieve());
 			eventList.FindNext();
 		}
 		if (eventList.retrieve().getContact().getName().equalsIgnoreCase(name))
-			event.AddEvent(eventList.retrieve());
+			event.insert(eventList.retrieve());
 
 		return event;
 	}
@@ -400,11 +374,11 @@ public class PhoneBook {
 		ContactLinkedList.FindFirst();
 		while (!ContactLinkedList.last()) {
 			if (ContactLinkedList.retrieve().getAddress().equals(address))
-				Contacts.AddContact(ContactLinkedList.retrieve());
+				Contacts.insert(ContactLinkedList.retrieve());
 			ContactLinkedList.FindNext();
 		}
 		if (ContactLinkedList.retrieve().getAddress().equals(address))
-			Contacts.AddContact(ContactLinkedList.retrieve());
+			Contacts.insert(ContactLinkedList.retrieve());
 
 		return Contacts;
 
@@ -449,11 +423,11 @@ public class PhoneBook {
 
 			while (!ContactLinkedList.last()) {
 				if (ContactLinkedList.retrieve().getBirthday().equals(birthday))
-					Contacts.AddContact(ContactLinkedList.retrieve());
+					Contacts.insert(ContactLinkedList.retrieve());
 				ContactLinkedList.FindNext();
 			}
 			if (ContactLinkedList.retrieve().getBirthday().equals(birthday))
-				Contacts.AddContact(ContactLinkedList.retrieve());
+				Contacts.insert(ContactLinkedList.retrieve());
 
 			return Contacts;
 		}
@@ -467,11 +441,11 @@ public class PhoneBook {
 			ContactLinkedList.FindFirst();
 			while (!ContactLinkedList.last()) {
 				if (ContactLinkedList.retrieve().getEmail().equals(email))
-					Contacts.AddContact(ContactLinkedList.retrieve());
+					Contacts.insert(ContactLinkedList.retrieve());
 				ContactLinkedList.FindNext();
 			}
 			if (ContactLinkedList.retrieve().getEmail().equals(email))
-				Contacts.AddContact(ContactLinkedList.retrieve());
+				Contacts.insert(ContactLinkedList.retrieve());
 
 			return Contacts;
 		}
@@ -518,7 +492,7 @@ public class PhoneBook {
 				ContactLinkedList.FindNext();
 
 			}
-		} 
+		}
 		index = ContactLinkedList.retrieve().getName().indexOf(" ");
 		if (index !=-1) {
 		FirstName = ContactLinkedList.retrieve().getName().substring(0, index);
@@ -584,12 +558,13 @@ public class PhoneBook {
 
 	public void AddEventToContact(Event event) {
 		String ContactName = event.getContactName();
-		if (!ContactLinkedList.empty()) {
+		if (ContactLinkedList.empty())
+			return;
+		else {
 			ContactLinkedList.FindFirst();
 			while (!ContactLinkedList.last()) {
 				if (ContactLinkedList.retrieve().getName().equalsIgnoreCase(ContactName))
 					ContactLinkedList.retrieve().setContactEvents(event);
-				;
 
 				ContactLinkedList.FindNext();
 			}
